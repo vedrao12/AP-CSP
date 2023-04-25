@@ -2,10 +2,7 @@ import random
 
 
 def deal_card(deck):
-    """
-    Takes a deck of cards (list of strings) and returns a random card from it,
-    and removes that card from the deck.
-    """
+
     card = random.choice(deck)
     deck.remove(card)
     return card
