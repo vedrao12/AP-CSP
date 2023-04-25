@@ -1,0 +1,69 @@
+import random
+#declare variables
+gas = 12
+boredom_level = 0
+batterylife = 100
+time = 500
+distanceleft = 400
+gamestate= True
+
+
+def decreasetime(inta, intb):
+  global time, boredom_level
+  timedec = random.randint(int(inta), int(intb))
+  time = time - timedec
+  if timedec >= 30:
+    boredom_level = boredom_level + 1
+
+def drive():
+  global distanceleft, batterylife, gas, time
+  distancedec = random.randint(50, 70)
+  distanceleft = distanceleft - distancedec
+  decreasetime(30,45)
+  gasdec = random.randint(2, 5)
+  gas = gas - gasdec
+  batterydec = random.randint(20,30)
+  batterylife = batterylife - batterydec
+  print("You have "+str(distanceleft)+" miles left, "+str(batterylife)+" percent on your phone, "+str(gas)+" gallons in the tank, a boredom level of " +str(boredom_level)+ ", and "+str(time)+" minutes to go.")
+
+def charge():
+  global batterylife, time
+  batteryinc = random.randint(30,40)
+  batterylife = batterylife + batteryinc
+  decreasetime(30,45)
+  print("You have "+str(batterylife)+" percent on your phone and "+str(time)+" minutes left.")
+
+def use_phone():
+  global time, boredom_level, batterylife
+  decreasetime(30,45)
+  boredom_level = boredom_level - 3
+  if boredom_level < 0:
+    boredom_level = 0
+  batterydec2 = random.randint(10,20)
+  batterylife = batterylife - batterydec2
+  print("You have a boredom level of "+str(boredom_level)+", "+str(batterylife)+" percent on your phone, and "+str(time)+" minutes left.")
+
+def refuel():
+  global gas, time
+  gas = 12
+  decreasetime(10,20)
+  print("You have a full tank of gas and "+str(time)+" minutes left!")
+
+while gamestate== True:
+  if gas <= 0 or boredom_level == 10 or time <= 0 or batterylife <= 0:
+    gamestate = False
+    print("You lost!")
+  elif distanceleft <= 0:
+    gamestate = False
+    print("You have arrived in LA!")
+  act = input("Do you want to Drive/Charge/Use Phone/Refuel?")
+  if act == "Drive":
+    drive()
+  elif act == "Charge":
+    charge()
+  elif act == "Use Phone":
+    use_phone()
+  elif act == "Refuel":
+    refuel()
+  else:
+    print("Not a valid action")
